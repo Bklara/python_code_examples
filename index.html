@@ -1,0 +1,78 @@
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Suggest.viewer</title>
+<script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"> var $SCRIPT_ROOT = "{{request.script_name}}";</script>
+<script src="https://cdn.rawgit.com/lingtalfi/simpledrag/master/simpledrag.js"></script>
+
+</head>
+
+<div class="panes-container" id="container">
+<div id="left_pane" class="left-pane" >
+<form  method='post | get'>
+<h1>Подскажу по-новому ...</h1>
+<body>
+
+<p> <input type="text "id="myId" size="80" name="prefix" / > <input type="number" id="count" size="10" name="count" value=10 / ></p>
+
+ <table class="table suggests" id= "result"  border="1" cellspacing="1">
+        <thead>
+            <tr>
+                <th>Запрос</th>
+                <th class="freq">Частотность</th>
+                <th class="cluster">Кластер</th>
+                <th class="cluster">Критерий(не реклама,не опечатка,есть события)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+
+</table>
+<br />
+<br />
+<table border="2" class="table clusters"  id="listofclusters">
+<tbody>
+</tbody>
+</table>
+
+</body>
+</form>
+</div>
+<div class="panes-separator" id="panes-separator"></div>
+
+<div id="right_pane" class="right-pane" >
+<h1>Подскажу по-старому ...</h1>
+<form  method='post | get'>
+<body>
+<p> <input type="text" readonly id="old_myId" size="50"  / ><p>
+<p> <table class="table old_ suggests" id= "old_result"  border="1" >
+        <thead>
+            <tr>
+                <th>Запрос</th>
+                <th class="freq">Частотность</th>
+                <th class="cluster">Кластер</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+</table>
+<br />
+<br />
+<table border="2" class="table clusters"  id="old_listofclusters">
+<tbody>
+</tbody>
+</table>
+<a name='desc' onclick="get_description();return false;">Подробнее </a>
+
+<div id="description"></div>
+</body>
+</form>
+</div>
+
+<script src="js_part.js"></script>
+<link rel="stylesheet" type="text/css" href="css_part.css" />
+</form>
+</div>
+
+</html>
+
