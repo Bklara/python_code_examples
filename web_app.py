@@ -184,7 +184,7 @@ def get_another_suggest(prefix):
         return(e)
     except Exception as inst:
         LOG.write('get_another_suggest'+prefix + str(inst) +'\n') 
-        print('get_another_suggest '+prefix +' '+ str(inst) +'\n')
+        #print('get_another_suggest '+prefix +' '+ str(inst) +'\n')
         return None
 
 
@@ -201,7 +201,7 @@ def old_get_cluster(n):
     
         e = []
         for i,element in enumerate(results):
-            print(element)
+            #print(element)
             e.append({'_source':{'query': str(element[0]), 'count': element[1], 'cluster': element[2]}})
     
         return(e)
@@ -240,8 +240,7 @@ def get_suggest():
                 res_after=po['aggregations']['by_clusters']['buckets']
                 querys=list(map(lambda x: x['top']['hits']['hits'][0]['_source']['query_4showing'] , res ))
                 clusters=list(map(lambda x: x['top']['hits']['hits'][0]['_source']['cluster'] , res ))
-                print(list(clusters))
-                print(list(map(lambda x: x['top']['hits']['hits'][0]['_source']['query_4showing'], res_after)))
+                
                 res_after=list(filter(lambda x: (( x['top']['hits']['hits'][0]['_source']['query_4showing'] not in querys)\
            and (x['top']['hits']['hits'][0]['_source']['cluster'] not in clusters))  ,res_after))
                 print(list(map(lambda x: (( x['top']['hits']['hits'][0]['_source']['query_4showing'] not in querys)\
@@ -250,38 +249,30 @@ def get_suggest():
                 res=res+res_after[:(MAX-len(res))]
             except Exception as ex:
                 print(ex)
-                print("HERE")   
+                
         try:
-
-            print("BEFORE",res[:MAX])
+            
             res.sort(key=lambda x:int( x['top']['hits']['hits'][0]['_source']['count']), reverse=True)
-            print("AFTER COUNT SORT",res[:MAX])
+            
 
         except Exception as Ex:
-            print("SORT EXCEPTION" , Ex)
+           
             pass
 
-        #print("PRESORTED",res)
+       
         res.sort( key = lambda x: 2*int( (x['top']['hits']['hits'][0]['_source']['query_4matching'][:len(prefix)]==prefix))+ \
            int( (x['top']['hits']['hits'][0]['_source']['query_4matching'][:len(prefix_ru)]==prefix_ru) )+ \
            int( (x['top']['hits']['hits'][0]['_source']['query_4matching'][:len(prefix_en)]==prefix_en) ),reverse=True)
-
-        print("SORTED",res[:MAX]) 
-
-        #print(list(map( lambda x: (x['top']['hits']['hits'][0]['_source']['query_4matching'],2*int( (x['top']['hits']['hits'][0]['_source']['query_4matching'][:len(prefix)]==$
-        #   int( (x['top']['hits']['hits'][0]['_source']['query_4matching'][:len(prefix_ru)]==prefix_ru) )+ \
-        #   int( (x['top']['hits']['hits'][0]['_source']['query_4matching'][:len(prefix_en)]==prefix_en) )),res)))
-
+        
         a=res[:MAX]
-#        a.sort(key=lambda x:int( x['top']['hits']['hits'][0]['_source']['count']),reverse=True)
         res= json.dumps(a)
-                #print("here",res)
+                
     except Exception as e:
-        print(res)
-        print("HERE?")
+        #print(res)
+        
         res= json.dumps({})
         LOG.write('suggest'+ request.query.prefix+ str(e) +'\n')
-        print(e)
+        #print(e)
 
     return res
 
@@ -297,7 +288,7 @@ def get_old_suggest():
 
     except Exception as e:
         res= json.dumps({})
-        print('old_get_suggest'+ request.query+str(e) +'\n')
+        #print('old_get_suggest'+ request.query+str(e) +'\n')
 
         LOG.write('old_get_suggest'+ request.query+str(e) +'\n')
 
